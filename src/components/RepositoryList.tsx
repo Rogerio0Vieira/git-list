@@ -1,21 +1,27 @@
 import { RepositoryItem } from "./RepositoryItem";
+import { useState, useEffect } from "react";
 
 import '../styles/repositories.scss';
-import { useState, useEffect } from "react";
 
 //https://api.github.com/orgs/rocketseat/repos
 //https://api.github.com/users/Rogerio0Vieira/repos
 
+interface Repository{
+  name: string;
+  description: string;
+  html_url: string;
+}
+
 
 export function RepositoryList(){
 
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState<Repository[]>([]); //Tipo generico
 
   useEffect(()=>{
     fetch('https://api.github.com/users/Rogerio0Vieira/repos')
     .then(response => response.json())
     .then(data => setRepositories(data))
-  }, []); //Nunca deixar sem o segundo parametro
+  }, []); 
 
   return(
     <section className="repository-list">
